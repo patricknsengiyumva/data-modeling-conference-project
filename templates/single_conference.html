@@ -10,9 +10,6 @@
         integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <style>
-
-    </style>
 </head>
 
 <body>
@@ -22,18 +19,16 @@
 
     <main class="main-contents">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
+            {% if conference %}
+            <div class="d-flex justify-content-between">
                 <h1>
-                    Upcoming conferences
+                    {{ conference.title }}
                 </h1>
-                <a href="/conferences/create/" class="btn btn-success">new conference</a>
+                <div class="buttons">
+                    <a href="/conferences/{{ conference.id }}/update" class="btn btn-secondary">update</a>
+                    <a href="/conferences/{{ conference.id }}/delete" class="btn btn-secondary">delete</a>
+                </div>
             </div>
-            {% if message %}
-            <div class="messages-wrapper mb-3">
-                <div class="alert alert-success">{{ message }}</div>
-            </div>
-            {% endif %}
-            {% for conference in conference_list %}
             <div class="conference-card mb-2">
                 <div class="d-flex align-items-center">
                     <div class="left-box p-4 col-4">
@@ -53,13 +48,21 @@
                                 hosted by {{ conference.hosting_organization }}
                             </div>
                         </div>
-                        <div class="btn">
-                            <a href="/conferences/{{conference.id}}" class="btn btn-secondary">learn more</a>
-                        </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+            <div class="p-2">
+                <h3>Topics</h3>
+                <ul>
+                    {% for topic in conference.topics %}
+                    <li>{{ topic }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% else %}
+            <h1 class="text-center">CONFERENCE NOT FOUND</h1>
+            {% endif %}
         </div>
     </main>
 
