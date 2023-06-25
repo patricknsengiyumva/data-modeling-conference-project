@@ -38,8 +38,6 @@ class EventPlanner(AbstractBaseUser):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, verbose_name='email', unique=True)
     password = models.CharField(max_length=255)
-    age = models.IntegerField(null=True, blank=True)
-    gender = models.CharField(max_length=1, null=True, blank=True)
     # required fields
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -63,15 +61,19 @@ class EventPlanner(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+
 class Conference(models.Model):
     title = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
+    event_planner = models.ForeignKey(EventPlanner, on_delete=models.CASCADE)
     date = models.DateTimeField()
 
     def __str__(self):
         return f"{self.title}"
-    
+
     def get_conference_date(self):
         return self.date.strftime("%Y-%m-%d %I:%M %p")
+
 
 class Speaker(models.Model):
     name = models.CharField(max_length=100)
@@ -79,10 +81,11 @@ class Speaker(models.Model):
     contact_information = models.CharField(max_length=200)
     profile_picture = models.ImageField(upload_to='speakers/')
     areas_of_expertise = models.TextField()
+    conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
-    
+
 
 class Session(models.Model):
     title = models.CharField(max_length=200)
@@ -91,6 +94,9 @@ class Session(models.Model):
     end_time = models.DateTimeField()
     conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
     speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 
 
 class Attendee(models.Model):
