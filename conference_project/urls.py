@@ -20,11 +20,10 @@ from core import views
 
 urlpatterns = [
     # www.conference.rw/admin/
+    path('', include('core.urls')),
+
     path('admin/', admin.site.urls),
 
-    path('conferences', include('conferences.urls')),
-    path('speakers', include('speakers.urls')),
-
-    path('', include('core.urls'))
-
+    path('conferences/', include('conferences.urls')),
+    path('speakers/', include('speakers.urls')),
 ]

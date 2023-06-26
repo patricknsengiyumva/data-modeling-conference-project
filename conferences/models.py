@@ -8,7 +8,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, email, username, name, password=None):
+    def create_user(self, email, name, password=None):
         if not email:
             raise ValueError("an email address is required for users")
         if not name:
@@ -21,7 +21,7 @@ class UserAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, name, password):
+    def create_superuser(self, email, name, password):
         user = self.create_user(
             email=self.normalize_email(email),
             password=password,
@@ -44,11 +44,14 @@ class EventPlanner(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(
-        verbose_name='date joined', auto_now_add=True, null=True)
+        verbose_name='date joined',
+        auto_now_add=True,
+        null=True
+    )
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email', 'name', 'password']
+    REQUIRED_FIELDS = ['name', 'password']
 
     objects = UserAccountManager()
 

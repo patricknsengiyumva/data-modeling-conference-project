@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Conference project</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+        integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="text-center"><a href="/" title="home"><img
+                    src="{% static 'images/people-community-with-plus-sign-3204ld.png' %}" alt="Logo"
+                    style="width: 60px;"> conferences</a></h1>
+    </header>
+
+    <main class="main-contents d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+        <div class="login-box">
+            <h3 class="mb-4 text-center">Sign in to continue</h3>
+            <div class="card">
+                <div class="card-body">
+                    <form action="" method="post" style="min-width: 400px;">
+                        {% csrf_token %}
+                        <div class="form-input mb-3">
+                            <label for="email" class="mb-2">Email Address</label>
+                            <input type="email" class="form-control" name="email" id="email"
+                                placeholder="Email Address">
+                        </div>
+                        <div class="form-input mb-3">
+                            <label for="password" class="mb-2">Password</label>
+                            <input type="password" class="form-control" name="password" id="email"
+                                placeholder="Password">
+                        </div>
+                        <button class="btn btn-primary"><i class="fas fa-sign-in"></i> login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+</body>
+
+</html>

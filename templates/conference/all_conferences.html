@@ -17,7 +17,9 @@
 
 <body>
     <header class="header">
-        <h1 class="text-center"><a href="/" title="home">Conference app</a></h1>
+        <h1 class="text-center"><a href="/" title="home"><img
+                    src="{% static 'images/people-community-with-plus-sign-3204ld.png' %}" alt="Logo"
+                    style="width: 60px;"> conferences</a></h1>Conference app</a></h1>
     </header>
 
     <main class="main-contents">
@@ -26,19 +28,19 @@
                 <h1>
                     Upcoming conferences
                 </h1>
-                <a href="/conferences/create/" class="btn btn-success">new conference</a>
+                <a href="/conferences/create/" class="btn btn-success"><i class="fas fa-plus-circle"></i> new conference</a>
             </div>
             {% if message %}
             <div class="messages-wrapper mb-3">
                 <div class="alert alert-success">{{ message }}</div>
             </div>
             {% endif %}
-            {% for conference in conference_list %}
+            {% for conference in conferences %}
             <div class="conference-card mb-2">
                 <div class="d-flex align-items-center">
                     <div class="left-box p-4 col-4">
                         <div class="date">
-                            {{ conference.date_time }}
+                            {{ conference.date }}
                         </div>
                         <div class="location">
                             {{ conference.location }}
@@ -50,7 +52,7 @@
                                 {{ conference.title }}
                             </div>
                             <div class="host">
-                                hosted by {{ conference.hosting_organization }}
+                                hosted by <strong>{{ conference.event_planner.name }}</strong>
                             </div>
                         </div>
                         <div class="btn">
