@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from .models import Conference, Session
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 
 
 def all_conferences(request):
@@ -17,15 +19,19 @@ def view_single_conference(request, id):
     })
 
 
+@login_required(login_url='/login')
 def create_conference(request):
     if request.method == 'POST':
         title = request.POST['title']
         date = request.POST['date']
-        conference = Conference.objects.create(title=title, date=date)
-        return redirect('conferences:view_single_conference', id=conference.id)
+        location = request.POST['location']
+        conference = Conference.objects.create(
+            title=title, date=date, event_planner=request.user, location=location)
+        return HttpResponseRedirect(redirect_to='/conferences')
     return render(request, 'conference/create_conference.html')
 
 
+@login_required(login_url='/login')
 def update_conference(request, id):
     conference = get_object_or_404(Conference, id=id)
 
@@ -48,6 +54,7 @@ def update_conference(request, id):
     return render(request, 'conference/update_conference.html', context)
 
 
+@login_required(login_url='/login')
 def delete_conference(request, id):
     conference = get_object_or_404(Conference, id=id)
 

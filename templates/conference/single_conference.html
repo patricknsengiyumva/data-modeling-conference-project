@@ -27,6 +27,8 @@
                     {{ conference.title }}
                 </h1>
                 <div class="buttons">
+
+                    <a href="/conferences/{{ conference.id }}/update" class="btn btn-success">add sessions</a>
                     <a href="/conferences/{{ conference.id }}/update" class="btn btn-secondary">update</a>
                     <a href="/conferences/{{ conference.id }}/delete" class="btn btn-secondary">delete</a>
                 </div>
@@ -35,7 +37,7 @@
                 <div class="d-flex align-items-center">
                     <div class="left-box p-4 col-4">
                         <div class="date">
-                            {{ conference.date_time }}
+                            {{ conference.date }}
                         </div>
                         <div class="location">
                             {{ conference.location }}
@@ -47,19 +49,26 @@
                                 {{ conference.title }}
                             </div>
                             <div class="host">
-                                hosted by {{ conference.hosting_organization }}
+                                hosted by {{ conference.event_planner.name }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="p-2">
-                <h3>Topics</h3>
+                <h3>Sessions</h3>
+                {% if session %}
                 <ul>
-                    {% for topic in conference.topics %}
-                    <li>{{ topic }}</li>
+                    {% for session in sessions %}
+                    <li>{{ session.title }}</li>
                     {% endfor %}
                 </ul>
+                {% else %}
+                <div class="alert alert-info">
+                    No sessions available for this conference
+                </div>
+                {% endif %}
+
             </div>
 
             {% else %}
